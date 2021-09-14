@@ -1,13 +1,13 @@
-package com.rainerramos.convidados.ui.gallery
+package com.rainerramos.convidados.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class PresentViewModel : ViewModel() {
+class AllGuestsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is present Fragment"
+        value = "This is all guests Fragment"
     }
     val text: LiveData<String> = _text
 }

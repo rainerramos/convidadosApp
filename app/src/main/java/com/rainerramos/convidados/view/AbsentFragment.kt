@@ -1,4 +1,4 @@
-package com.rainerramos.convidados.ui.gallery
+package com.rainerramos.convidados.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,12 +8,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.rainerramos.convidados.databinding.FragmentGalleryBinding
+import com.rainerramos.convidados.databinding.FragmentSlideshowBinding
+import com.rainerramos.convidados.viewmodel.AbsentViewModel
 
-class PresentFragment : Fragment() {
+class AbsentFragment : Fragment() {
 
-    private lateinit var presentViewModel: PresentViewModel
-    private var _binding: FragmentGalleryBinding? = null
+    private lateinit var absentViewModel: AbsentViewModel
+    private var _binding: FragmentSlideshowBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,14 +25,14 @@ class PresentFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        presentViewModel =
-            ViewModelProvider(this).get(PresentViewModel::class.java)
+        absentViewModel =
+            ViewModelProvider(this).get(AbsentViewModel::class.java)
 
-        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textGallery
-        presentViewModel.text.observe(viewLifecycleOwner, Observer {
+        val textView: TextView = binding.textSlideshow
+        absentViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
