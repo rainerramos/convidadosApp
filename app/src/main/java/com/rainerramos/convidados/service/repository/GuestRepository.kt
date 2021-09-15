@@ -56,7 +56,23 @@ class GuestRepository private constructor(context: Context) {
     //CRUD - Create, Read, Update, Delete
 
 
-    fun update(guest: GuestModel) {
+    fun update(guest: GuestModel): Boolean {
+        return try {
+
+            val db = mGuestDataBaseHelper.writableDatabase
+
+            val contentvalues = ContentValues()
+            contentvalues.put(DataBaseConstants.GUEST.COLUMNS.NAME, guest.name)
+            contentvalues.put(DataBaseConstants.GUEST.COLUMNS.PRESENCE, guest.presence)
+
+            val selection = DataBaseConstants.GUEST.COLUMNS.ID + " = ?"
+            val args = arrayOf(guest.id.toString())
+
+            db.update(DataBaseConstants.GUEST.TABLE_NAME, contentvalues, selection, args)
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 
     fun delete(guest: GuestModel) {
