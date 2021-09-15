@@ -1,26 +1,40 @@
 package com.rainerramos.convidados.service.repository
 
+import android.content.ContentValues
 import android.content.Context
+import com.rainerramos.convidados.service.constants.DataBaseConstants
 import com.rainerramos.convidados.service.model.GuestModel
+import java.sql.DatabaseMetaData
 
-class GuestRepository private constructor(context: Context){
+class GuestRepository private constructor(context: Context) {
 
     private var mGuestDataBaseHelper: GuestDataBaseHelper = GuestDataBaseHelper(context)
 
-    companion object{
+    companion object {
         private lateinit var repository: GuestRepository
 
 
-        fun getInstance(context: Context) : GuestRepository {
-            if(!::repository.isInitialized) {
+        fun getInstance(context: Context): GuestRepository {
+            if (!::repository.isInitialized) {
                 repository = GuestRepository(context)
             }
             return repository
         }
     }
 
-    fun save(guest: GuestModel) {
-        mGuestDataBaseHelper.writableDatabase
+    fun save(guest: GuestModel): Boolean {
+        return try {
+
+            val db = mGuestDataBaseHelper.writableDatabase
+
+            val contentvalues = ContentValues()
+            contentvalues.put(DataBaseConstants.GUEST.COLUMNS.NAME, guest.name)
+            contentvalues.put(DataBaseConstants.GUEST.COLUMNS.PRESENCE, guest.presence)
+            db.insert(DataBaseConstants.GUEST.TABLE_NAME, null, contentvalues)
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 
 
@@ -40,7 +54,6 @@ class GuestRepository private constructor(context: Context){
     }
 
     //CRUD - Create, Read, Update, Delete
-
 
 
     fun update(guest: GuestModel) {
